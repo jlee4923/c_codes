@@ -8,9 +8,15 @@
 using namespace std;
 int d[51][51];
 int inven[6]; //keys
+int v[51][51][64];
 pair<int,int> moving[4] = {
     {0,-1}, {-1,0}, {0,1}, {1,0}
 };
+bool canVisit(int y, int x){
+    //v as a 3-d array: the third dimension means visiting a vertex
+    //with keys a~f. All possible ways of keys in inventory equals 
+    //2^6, which is 64.
+}
 int bfs(vector<vector<char> >&map, int n, int m){
     queue<pair<int,int> > q;
     int flag = 0, ones = 0;
@@ -27,18 +33,14 @@ int bfs(vector<vector<char> >&map, int n, int m){
     for(int i=0; i<n; i++)
         for(int j=0; j<m; j++)
             if(map[i][j]=='1') ones++;
-    while(!q.empty() && ones){
+    while(!q.empty()){
         pair<int,int> cur = q.front();
         q.pop();
-        if(map[cur.first][cur.second]=='1'){ 
-            
-            continue;
-        }
         cout << "current_y : " << cur.first << " current_x : " << cur.second << '\n';
         for(int i=0; i<4; i++){
             int y = cur.first+moving[i].first;
             int x = cur.second+moving[i].second;
-            if(y>=0 && y<n && x>=0 && x<m){
+            if(y>=0 && y<n && x>=0 && x<m && canVisit(y,x)){
                 cout << "valid!!\ny,x : " << y << ' ' << x << '\n';
                 if(map[y][x]=='#') continue;
                 else if(map[y][x]=='.'){
